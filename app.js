@@ -1,19 +1,50 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const rateLimit = require("express-rate-limit"); // security
+const helmet = require("helmet"); // security
+const sanitize = require("express-mongo-sanitize"); // prevent nosql injection
+const xss = require("xss-clean"); // prevent any html or javscript-injection
 
+// mounting the routes
 const productRouter = require("./routes/productRoute");
 
+// middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// helmet
+app.use(helmet());
+
+// rate-limit
+let limit = {
+  max: 1000, // max request
+  windowms: 60 * 60 * 1000, // 1 hour
+  message: "Too many requests from this IP, please try again after an hour",
+};
+
+app.use(rateLimit(limit)); // rate-limit
+
+app.use(sanitize()); // security // prevent nosql-injection
+
+app.use(xss()); // prevent any html or javascript-injection
+
+// third-party middlewares
 app.use(morgan("dev"));
+// use the routes
 app.use("/api/v1", productRouter);
 
+// welcome page
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "Welcome to my API",
     sccess: true,
+  });
+});
+
+app.use("*", (req, res, next) => {
+  res.status(404).json({
+    message: `${req.originalUrl} Route not found`,
   });
 });
 
