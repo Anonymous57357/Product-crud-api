@@ -2,19 +2,21 @@ const Product = require("./../models/productModel");
 const asyncErrorHandler = require("./../utils/asyncErrorHandler");
 const CustomApiError = require("./../utils/CustomApiError");
 const { StatusCodes } = require("http-status-codes");
+const loggers = require("./../utils/loggers");
 
 // METHOD : POST
 // URL: http://localhost:4000/api/v1/products
 const createProduct = asyncErrorHandler(async (req, res, next) => {
   const product = await Product.create(req.body);
   const getProduct = "http://localhost:4000/api/v1/products";
-  res.status(StatusCodes.OK).json({
-    status: "success",
-    status: {
-      data: product,
-      message: `where to go from here URL: ${getProduct}`,
-    },
-  });
+  loggers.info("Product Created Successfully"),
+    res.status(StatusCodes.OK).json({
+      status: "success",
+      status: {
+        data: product,
+        message: `where to go from here URL: ${getProduct}`,
+      },
+    });
 });
 
 // METHOD : GET

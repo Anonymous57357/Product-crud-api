@@ -10,6 +10,7 @@ const ProductSchema = mongoose.Schema(
     description: {
       type: String,
       required: [true, "Please enter description"],
+      unique: true,
     },
     quantity: {
       type: Number,

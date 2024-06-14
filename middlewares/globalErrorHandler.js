@@ -1,5 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const CustomApiError = require("./../utils/CustomApiError");
+const loggers = require("./../utils/loggers");
+
 const devError = (res, err) => {
   res.status(err.statusCode).json({
     status: err.statusCode,
@@ -29,6 +31,7 @@ const validationError = (err) => {
   const errors = Object.values(err.errors).map((val) => val.message);
   const errorMessage = errors.join(". ");
   const msg = `Invalid data input ${errorMessage}`;
+  loggers.error(msg);
   return new CustomApiError(msg, StatusCodes.BAD_REQUEST);
 };
 
