@@ -37,6 +37,8 @@ const validationError = (err) => {
 
 const castError = (err) => {
   const msg = `Invalid id make sure check the ${err.path} and value ${err.value}`;
+  loggers.error(msg);
+
   return new CustomApiError(msg, StatusCodes.BAD_REQUEST);
 };
 

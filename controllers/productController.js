@@ -23,13 +23,14 @@ const createProduct = asyncErrorHandler(async (req, res, next) => {
 // URL: http://localhost:4000/api/v1/products
 const findAllProduct = asyncErrorHandler(async (req, res) => {
   const product = await Product.find();
-  res.status(StatusCodes.OK).json({
-    status: "success",
-    count: product.length,
-    data: {
-      product,
-    },
-  });
+  loggers.info("Getting all Products Successfully"),
+    res.status(StatusCodes.OK).json({
+      status: "success",
+      count: product.length,
+      data: {
+        product,
+      },
+    });
 });
 
 // METHOD : GET
@@ -37,13 +38,14 @@ const findAllProduct = asyncErrorHandler(async (req, res) => {
 const findSingleProduct = asyncErrorHandler(async (req, res) => {
   const id = req.params.productId;
   const product = await Product.findById(id);
-  res.status(StatusCodes.OK).json({
-    status: "success",
-    count: product.length,
-    data: {
-      product,
-    },
-  });
+  loggers.info("Getting Single Products Successfully"),
+    res.status(StatusCodes.OK).json({
+      status: "success",
+      count: product.length,
+      data: {
+        product,
+      },
+    });
 });
 
 // METHOD : PUT
@@ -52,13 +54,13 @@ const updateProduct = asyncErrorHandler(async (req, res) => {
   const id = req.params.productId;
   const { name, price } = req.body;
   const product = await Product.findByIdAndUpdate(id, { name, price });
-
-  res.status(StatusCodes.OK).json({
-    status: "success",
-    data: {
-      product,
-    },
-  });
+  loggers.info("Products Updated Successfully"),
+    res.status(StatusCodes.OK).json({
+      status: "success",
+      data: {
+        product,
+      },
+    });
 });
 
 // METHOD : DELETE
@@ -66,12 +68,12 @@ const updateProduct = asyncErrorHandler(async (req, res) => {
 const deleteProduct = asyncErrorHandler(async (req, res) => {
   const id = req.params.productId;
   const product = await Product.findByIdAndDelete(id);
-  const createProduct = "http://localhost:4000/api/v1/products";
-  res.status(StatusCodes.OK).json({
-    status: "success",
-    data: null,
-    message: `where to go from here URL: ${createProduct}`,
-  });
+  loggers.info("Products Deleted"),
+    res.status(StatusCodes.OK).json({
+      status: "success",
+      data: null,
+      message: `where to go from here URL: ${createProduct}`,
+    });
 });
 
 // METHOD : GET
