@@ -6,6 +6,10 @@ const helmet = require("helmet"); // security
 const sanitize = require("express-mongo-sanitize"); // prevent nosql injection
 const xss = require("xss-clean"); // prevent any html or javscript-injection
 
+const globalErrorHandler = require("./middlewares/globalErrorHandler");
+
+const CustomApiError = require("././utils/CustomApiError");
+
 // mounting the routes
 const productRouter = require("./routes/productRoute");
 
@@ -43,9 +47,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("*", (req, res, next) => {
-  res.status(404).json({
-    message: `${req.originalUrl} Route not found`,
-  });
+  const error = new CustomApiError(`${req.originalUrl} Route not found`, 404);
+  next(error);
 });
+
+app.use(globalErrorHandler);
 
 module.exports = app;

@@ -25,5 +25,8 @@ const PORT = process.env.PORT || 3000;
 
 server.listen(
   PORT,
-  console.log(`server is listening on PORT ${PORT}`.yellow.underline.bold)
+  console.log(
+    `server is listening on PORT ${PORT} and running on ${process.env.NODE_ENV} environment`
+      .yellow.underline.bold
+  )
 );

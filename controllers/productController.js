@@ -1,108 +1,90 @@
 const Product = require("./../models/productModel");
+const asyncErrorHandler = require("./../utils/asyncErrorHandler");
+const CustomApiError = require("./../utils/CustomApiError");
+const { StatusCodes } = require("http-status-codes");
 
-const createProduct = async (req, res) => {
-  try {
-    const product = await Product.create(req.body);
-    res.status(201).json(product);
-  } catch (err) {
-    res.status(500).json({
-      status: "fail",
-      message: err.message,
-      //   message: err.message,
-    });
-  }
-};
+// METHOD : POST
+// URL: http://localhost:4000/api/v1/products
+const createProduct = asyncErrorHandler(async (req, res, next) => {
+  const product = await Product.create(req.body);
+  const getProduct = "http://localhost:4000/api/v1/products";
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    status: {
+      data: product,
+      message: `where to go from here URL: ${getProduct}`,
+    },
+  });
+});
 
-const findAllProduct = async (req, res) => {
-  try {
-    const product = await Product.find();
+// METHOD : GET
+// URL: http://localhost:4000/api/v1/products
+const findAllProduct = asyncErrorHandler(async (req, res) => {
+  const product = await Product.find();
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    count: product.length,
+    data: {
+      product,
+    },
+  });
+});
 
-    res.status(200).json({
-      status: "success",
-      results: product.length,
-      data: {
-        product,
-      },
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
+// METHOD : GET
+// URL: http://localhost:4000/api/v1/products/:id
+const findSingleProduct = asyncErrorHandler(async (req, res) => {
+  const id = req.params.productId;
+  const product = await Product.findById(id);
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    count: product.length,
+    data: {
+      product,
+    },
+  });
+});
 
-const findSingleProduct = async (req, res) => {
-  try {
-    const id = req.params.productId;
-    const product = await Product.findById(id);
-    res.status(200).json(product);
-  } catch (err) {
-    res.status(500).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
+// METHOD : PUT
+// URL: http://localhost:4000/api/v1/products:/id
+const updateProduct = asyncErrorHandler(async (req, res) => {
+  const id = req.params.productId;
+  const { name, price } = req.body;
+  const product = await Product.findByIdAndUpdate(id, { name, price });
 
-const updateProduct = async (req, res) => {
-  try {
-    const id = req.params.productId;
-    const { name, price, image } = req.body;
-    const product = await Product.findByIdAndUpdate(id, { name, price, image });
-    if (!product) {
-      return res.status(400).json({
-        status: "fail",
-        message: "Product not found",
-      });
-    }
-    res.status(200).json(product);
-  } catch (err) {
-    res.status(500).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    data: {
+      product,
+    },
+  });
+});
 
-const deleteProduct = async (req, res) => {
-  try {
-    const id = req.params.productId;
-    const product = await Product.findByIdAndDelete(id);
-    if (!product) {
-      return res.status(400).json({
-        status: "fail",
-        message: "Product not found",
-      });
-    }
-    res.status(200).json(null);
-  } catch (err) {
-    res.status(500).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
+// METHOD : DELETE
+// URL: http://localhost:4000/api/v1/products:/id
+const deleteProduct = asyncErrorHandler(async (req, res) => {
+  const id = req.params.productId;
+  const product = await Product.findByIdAndDelete(id);
+  const createProduct = "http://localhost:4000/api/v1/products";
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    data: null,
+    message: `where to go from here URL: ${createProduct}`,
+  });
+});
 
-// aggregation pipeline
-const getProductStats = async (req, res) => {
-  try {
-    const stats = await Product.aggregate([
-      { $match: { quantity: { $gte: 3 } } },
-    ]);
-    res.status(200).json({
-      status: "success",
-      data: {
-        stats,
-      },
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: "fail",
-      message: err.message,
-    });
-  }
-};
+// METHOD : GET
+// URL: http://localhost:4000/api/v1/products
+const getProductStats = asyncErrorHandler(async (req, res) => {
+  const stats = await Product.aggregate([
+    { $match: { quantity: { $gte: 3 } } },
+  ]);
+  res.status(StatusCodes.OK).json({
+    status: "success",
+    data: {
+      stats,
+    },
+  });
+});
 
 module.exports = {
   createProduct,

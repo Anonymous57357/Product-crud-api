@@ -1,0 +1,81 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "PRODUCT",
+    "collectionId": "523ef922-1dec-43be-88d8-4054d4cb3b13",
+    "dateExported": "2024-06-13T22:46:17.351Z",
+    "version": "1.2",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "4f69879f-8b42-4d21-97c9-4d6fc81a1c47",
+            "colId": "523ef922-1dec-43be-88d8-4054d4cb3b13",
+            "containerId": "",
+            "name": "Get Products",
+            "url": "{{url}}products/",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2024-06-13T05:06:16.757Z",
+            "modified": "2024-06-13T22:08:59.030Z",
+            "headers": []
+        },
+        {
+            "_id": "15c7aa4c-6d78-411d-b975-b1140de90e67",
+            "colId": "523ef922-1dec-43be-88d8-4054d4cb3b13",
+            "containerId": "",
+            "name": "Get Product",
+            "url": "{{url}}products/663747da16859dc2ea2fb60c",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2024-06-13T07:08:08.247Z",
+            "modified": "2024-06-13T20:47:44.030Z",
+            "headers": []
+        },
+        {
+            "_id": "4b1655e9-8443-492c-94c2-8913a004cb2d",
+            "colId": "523ef922-1dec-43be-88d8-4054d4cb3b13",
+            "containerId": "",
+            "name": "Update Product",
+            "url": "{{url}}products/663747da16859dc2ea2fb60c",
+            "method": "PUT",
+            "sortNum": 30000,
+            "created": "2024-06-13T07:08:50.978Z",
+            "modified": "2024-06-13T20:49:22.313Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Automatic refridgerated\"\n}",
+                "form": []
+            }
+        },
+        {
+            "_id": "d833bb35-ca39-4bac-8888-54826e583d5a",
+            "colId": "523ef922-1dec-43be-88d8-4054d4cb3b13",
+            "containerId": "",
+            "name": "Delete Product",
+            "url": "{{url}}products/666b6db4ba5ce56f04511413",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2024-06-13T07:09:24.792Z",
+            "modified": "2024-06-13T22:09:38.536Z",
+            "headers": []
+        },
+        {
+            "_id": "89a09fda-7254-41f3-b0f4-31aa3321e5d0",
+            "colId": "523ef922-1dec-43be-88d8-4054d4cb3b13",
+            "containerId": "",
+            "name": "Create Product",
+            "url": "{{url}}products",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-06-13T21:57:10.684Z",
+            "modified": "2024-06-13T22:08:14.602Z",
+            "headers": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"speakers\"\n}",
+                "form": []
+            }
+        }
+    ],
+    "ref": "ORYvLU8n1s5cEvR61fbaXJ0LHiACwoiuIymw81IOVG7UpwQlLn9OlAmZ_DnTWyt07idkiUW8aDudsaZGaNVDcw"
+}
